@@ -2,7 +2,6 @@ package io.github.wellvergton.dotheshopping.controller;
 
 import io.github.wellvergton.dotheshopping.model.User;
 import io.github.wellvergton.dotheshopping.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,12 +10,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "/user")
 public class UserController {
-  @Autowired
-  private UserRepository userRepository;
-  @Autowired
-  private PasswordEncoder encoder;
+  private final UserRepository userRepository;
+  private final PasswordEncoder encoder;
+
+  public UserController(UserRepository userRepository, PasswordEncoder encoder) {
+    this.userRepository = userRepository;
+    this.encoder = encoder;
+  }
 
   @PostMapping(path = "/signup")
   public ResponseEntity<User> signUp(@RequestBody User user) {
@@ -25,7 +26,7 @@ public class UserController {
     return ResponseEntity.ok(userRepository.save(user));
   }
 
-  @GetMapping(path = "/signin")
+  @PostMapping(path = "/signin")
   public ResponseEntity<Boolean> signIn(@RequestBody User user) {
     Optional<User> userOptional = userRepository.findByEmail(user.getEmail());
 
