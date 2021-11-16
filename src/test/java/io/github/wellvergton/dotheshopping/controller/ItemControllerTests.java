@@ -20,9 +20,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -60,7 +58,7 @@ public class ItemControllerTests {
   }
 
   @Test
-  public void GivenWrongIdShouldReturnNotFound() throws Exception {
+  public void givenWrongIdShouldReturnNotFound() throws Exception {
     when(itemService.findItem(2L)).thenReturn(Optional.empty());
 
     this.mockMvc.perform(get("/item/2"))
@@ -77,7 +75,7 @@ public class ItemControllerTests {
         .content(mapper.writeValueAsString(newItem))
         .contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isCreated())
-      .andExpect(jsonPath("$.id").value(1L));
+      .andExpect(jsonPath("$.id").value(item.getId()));
   }
 
   @Test
@@ -93,5 +91,11 @@ public class ItemControllerTests {
       .andExpect(status().isOk())
       .andExpect(jsonPath("$.id").value(updatedItem.getId()))
       .andExpect(jsonPath("$.name").value(updatedItem.getName()));
+  }
+
+  @Test
+  public void shouldReturnNoContentWhenDeleteItem() throws Exception {
+    this.mockMvc.perform(delete("/item/1"))
+      .andExpect(status().isNoContent());
   }
 }
