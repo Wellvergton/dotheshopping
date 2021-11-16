@@ -6,7 +6,6 @@ import io.github.wellvergton.dotheshopping.model.Item;
 import io.github.wellvergton.dotheshopping.model.ItemList;
 import io.github.wellvergton.dotheshopping.model.User;
 import io.github.wellvergton.dotheshopping.service.ItemService;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -38,15 +37,9 @@ public class ItemControllerTests {
   @MockBean
   private ItemService itemService;
 
-  private static Item item;
-  private static ItemList list;
+  private final ItemList list = new ItemList(1L, "List", new User(), null);
+  private final Item item = new Item(1L, "Test", Measurement.UNITY, 1, false, list);
   private final ObjectMapper mapper = new ObjectMapper();
-
-  @BeforeAll
-  static void setup() {
-    list = new ItemList(1L, "List", new User(), null);
-    item = new Item(1L, "Test", Measurement.UNITY, 1, false, list);
-  }
 
   @Test
   public void shouldFindAnItemById() throws Exception {
