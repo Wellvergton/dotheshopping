@@ -24,12 +24,12 @@ public class ItemListService {
     return itemListRepository.save(list);
   }
 
-  public void updateList(Long id, ItemList list) {
+  public ItemList updateList(Long id, ItemList list) {
     ItemList dbList = itemListRepository.getById(id);
 
     dbList.setName(list.getName());
 
-    itemListRepository.save(dbList);
+    return itemListRepository.save(dbList);
   }
 
   public void deleteList(Long id) {

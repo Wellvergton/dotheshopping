@@ -35,9 +35,7 @@ public class ItemListController {
 
   @PutMapping("/{id}")
   public ResponseEntity<ItemList> updateList(@PathVariable Long id, @RequestBody ItemList list) {
-    itemListService.updateList(id, list);
-
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.ok(itemListService.updateList(id, list));
   }
 
   @DeleteMapping(path = "/{id}")
