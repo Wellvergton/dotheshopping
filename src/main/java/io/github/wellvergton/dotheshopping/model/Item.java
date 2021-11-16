@@ -5,11 +5,15 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.github.wellvergton.dotheshopping.deserializer.ItemDeserializer;
 import io.github.wellvergton.dotheshopping.enums.Measurement;
 import io.github.wellvergton.dotheshopping.serializer.ItemSerializer;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @JsonSerialize(using = ItemSerializer.class)
