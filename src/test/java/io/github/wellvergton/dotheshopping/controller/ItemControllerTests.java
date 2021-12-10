@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
   value = ItemController.class,
   excludeAutoConfiguration = SecurityAutoConfiguration.class
 )
-public class ItemControllerTests {
+class ItemControllerTests {
   @Autowired
   private MockMvc mockMvc;
 
@@ -42,7 +42,7 @@ public class ItemControllerTests {
   private final ObjectMapper mapper = new ObjectMapper();
 
   @Test
-  public void shouldFindAnItemById() throws Exception {
+  void shouldFindAnItemById() throws Exception {
     when(itemService.findItem(item.getId())).thenReturn(Optional.of(item));
 
     this.mockMvc.perform(get("/item/1"))
@@ -51,7 +51,7 @@ public class ItemControllerTests {
   }
 
   @Test
-  public void givenWrongIdShouldReturnNotFound() throws Exception {
+  void givenWrongIdShouldReturnNotFound() throws Exception {
     when(itemService.findItem(2L)).thenReturn(Optional.empty());
 
     this.mockMvc.perform(get("/item/2"))
@@ -59,7 +59,7 @@ public class ItemControllerTests {
   }
 
   @Test
-  public void shouldReturnTheCreatedItem() throws Exception {
+  void shouldReturnTheCreatedItem() throws Exception {
     Item newItem = new Item(0L, "Test", Measurement.UNITY, 1, false, list);
 
     when(itemService.saveItem(any(Item.class))).thenReturn(item);
@@ -72,7 +72,7 @@ public class ItemControllerTests {
   }
 
   @Test
-  public void shouldReturnTheUpdatedItem() throws Exception {
+  void shouldReturnTheUpdatedItem() throws Exception {
     Item updatedItem = new Item(1L, "Same Item", Measurement.UNITY, 1, false, list);
 
     when(itemService.updateItem(eq(updatedItem.getId()), any(Item.class)))
@@ -87,7 +87,7 @@ public class ItemControllerTests {
   }
 
   @Test
-  public void shouldReturnNoContentWhenDeleteItem() throws Exception {
+  void shouldReturnNoContentWhenDeleteItem() throws Exception {
     this.mockMvc.perform(delete("/item/1"))
       .andExpect(status().isNoContent());
   }

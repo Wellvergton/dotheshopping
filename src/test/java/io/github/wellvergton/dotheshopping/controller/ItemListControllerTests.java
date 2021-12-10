@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
   value = ItemListController.class,
   excludeAutoConfiguration = SecurityAutoConfiguration.class
 )
-public class ItemListControllerTests {
+class ItemListControllerTests {
   @Autowired
   private MockMvc mockMvc;
 
@@ -42,7 +42,7 @@ public class ItemListControllerTests {
   private final ObjectMapper mapper = new ObjectMapper();
 
   @Test
-  public void shouldFindAnListById() throws Exception {
+  void shouldFindAnListById() throws Exception {
     when(itemListService.findList(1L)).thenReturn(Optional.of(list));
 
     this.mockMvc.perform(get("/list/1"))
@@ -51,7 +51,7 @@ public class ItemListControllerTests {
   }
 
   @Test
-  public void givenWrongIdShouldReturnNotFound() throws Exception {
+  void givenWrongIdShouldReturnNotFound() throws Exception {
     when(itemListService.findList(2L)).thenReturn(Optional.empty());
 
     this.mockMvc.perform(get("/list/2"))
@@ -59,7 +59,7 @@ public class ItemListControllerTests {
   }
 
   @Test
-  public void shouldReturnTheCreatedList() throws Exception {
+  void shouldReturnTheCreatedList() throws Exception {
     ItemList newList = new ItemList(0L, "List", user, new ArrayList<Item>());
 
     when(itemListService.saveList(any(ItemList.class))).thenReturn(list);
@@ -72,7 +72,7 @@ public class ItemListControllerTests {
   }
 
   @Test
-  public void shouldReturnTheUpdatedItem() throws Exception {
+  void shouldReturnTheUpdatedItem() throws Exception {
     ItemList updatedList = new ItemList(1L, "Same List", user, new ArrayList<Item>());
 
     when(itemListService.updateList(eq(updatedList.getId()), any(ItemList.class)))
@@ -87,7 +87,7 @@ public class ItemListControllerTests {
   }
 
   @Test
-  public void shouldReturnNoContentWhenDeleteList() throws Exception {
+  void shouldReturnNoContentWhenDeleteList() throws Exception {
     this.mockMvc.perform(delete("/list/1"))
       .andExpect(status().isNoContent());
   }
